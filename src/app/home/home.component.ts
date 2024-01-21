@@ -1,4 +1,4 @@
-import { Component, DoCheck } from '@angular/core';
+import { Component, DoCheck, ElementRef, ViewChild } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -29,6 +29,8 @@ import { NgClass, NgFor } from '@angular/common';
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements DoCheck {
+  @ViewChild('tarefavalue') public tarefaValue!: ElementRef;
+
   ngDoCheck(): void {
     this.setLocalStorage();
   }
@@ -36,6 +38,7 @@ export class HomeComponent implements DoCheck {
   public tarefas: Itask[] = JSON.parse(localStorage.getItem('list') || '[]');
 
   addTarefa(tarefa: string, checked: boolean) {
+    this.tarefaValue.nativeElement.value = null;
     return this.tarefas.push({ tarefa, checked });
   }
 
